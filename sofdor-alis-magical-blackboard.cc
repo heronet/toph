@@ -10,6 +10,6 @@ int main() {
         std::cin >> base >> times;
         for(int j = 0; j != times; ++j)
             total += base;
-        std::cout << total << std::endl;;
+        std::cout << total << std::endl;
     }
 }
