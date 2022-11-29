@@ -4,11 +4,7 @@
 
 int main()
 {
-    short it;
-    std::cin >> it;
-
-    std::string plain;
-    std::cin >> plain;
-
-    std::string collection = "abcdefghijklmnopqrstuvwxyz";
+   char ch = 'A';
+   char ch1 = ch - 1;
+   std::cout << ch1;
 }
