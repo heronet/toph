@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sstream>
-#include <map>
+#include <algorithm>
+#include <unordered_map>
 
 int main()
 {
@@ -12,29 +13,29 @@ int main()
             ch = ' ';
     }
     std::stringstream ss(str);
-    std::map<std::string, size_t> words;
-    std::string tmp;
+    std::unordered_map<std::string, size_t> words;
+    std::string longest = "", shortest = "", most = "";
+    size_t most_count = 0;
 
+    std::string tmp;
     while (ss >> tmp)
     {
-        ++words[tmp];
-    }
-    size_t most_count = 0;
-    std::string longest = "", shortest = "", most = "";
-    for (const std::pair<std::string, size_t> &word : words)
-    {
+        auto tmpcpy = tmp;
+        std::transform(tmpcpy.begin(), tmpcpy.end(), tmpcpy.begin(), ::tolower);
+        ++words[tmpcpy];
         if(!shortest.length()) 
-            shortest = word.first;
-        if (word.first.length() >= longest.length())
-            longest = word.first;
-        if (word.second >= most_count)
+            shortest = tmp;
+        if (tmp.length() > longest.length())
+            longest = tmp;
+        if (tmp.length() < shortest.length())
+            shortest = tmp;
+        if (words[tmpcpy] > most_count)
         {
-            most_count = word.second;
-            most = word.first;
+            most_count = words[tmpcpy];
+            most = tmp;
         }
-        if (word.first.length() <= shortest.length())
-            shortest = word.first;
     }
+
     std::cout << longest << std::endl;
     std::cout << shortest << std::endl;
     std::cout << most << std::endl;
