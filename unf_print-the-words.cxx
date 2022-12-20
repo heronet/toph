@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include <algorithm>
+#include <string>
 #include <unordered_map>
 
 int main()
@@ -14,8 +15,11 @@ int main()
     }
     std::stringstream ss(str);
     std::unordered_map<std::string, size_t> words;
-    std::string longest = "", shortest = "", most = "";
+    std::unordered_map<std::string, size_t> priority;
+    std::unordered_map<std::string, std::string> capital;
+    std::string longest = "", shortest = "";
     size_t most_count = 0;
+    int counter = 0;
 
     std::string tmp;
     while (ss >> tmp)
@@ -23,20 +27,31 @@ int main()
         auto tmpcpy = tmp;
         std::transform(tmpcpy.begin(), tmpcpy.end(), tmpcpy.begin(), ::tolower);
         ++words[tmpcpy];
+        ++counter;
+        priority[tmpcpy] = counter;
+        capital[tmpcpy] = tmp;
         if(!shortest.length()) 
-            shortest = tmp;
+            shortest = capital[tmpcpy];
         if (tmp.length() > longest.length())
-            longest = tmp;
+            longest = capital[tmpcpy];
         if (tmp.length() < shortest.length())
-            shortest = tmp;
-        if (words[tmpcpy] > most_count)
-        {
-            most_count = words[tmpcpy];
-            most = tmp;
+            shortest = capital[tmpcpy];
+    }
+
+    std::string most_word;
+    for(const auto& pair: words) {
+        if(pair.second > most_count) {
+            most_count = pair.second;
+            most_word = capital[pair.first];
+        }
+        if(pair.second == most_count) {
+            if(priority[pair.first] < priority[most_word]) {
+                most_word = capital[pair.first];
+            }
         }
     }
 
     std::cout << longest << std::endl;
     std::cout << shortest << std::endl;
-    std::cout << most << std::endl;
+    std::cout << most_word << std::endl;
 }
