@@ -18,16 +18,16 @@ std::string fancy(std::string& str) {
 				return "Fancy";
 			
 			// same three
-			if(str[i] == str[i + 1])
+			if(str[i] == str[i + 1]) {
 				same_count += 1;
+				two_same_count += 1;
+			}
 			else
 				same_count = 0;
 			if(same_count == 2)
 				return "Fancy";
 
 			// two same
-			if(str[i] == str[i + 1])
-				two_same_count += 1;
 			if (two_same_count > 1)
 				return "Fancy";
 
